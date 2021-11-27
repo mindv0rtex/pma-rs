@@ -1,12 +1,32 @@
+mod util;
+
+const ρ0: f64 = 0.5;
+const τ0: f64 = 0.75;
+
+const ρd: f64 = 0.25;
+const τd: f64 = 1.0;
+
 pub struct PackedMemoryArray<T> {
+    size: usize,
+    capacity: usize,
+    segment_size: u8,
+    depth: u8,
+    Δρ: f64,
+    Δτ: f64,
     data: Vec<T>,
 }
 
 impl<T> PackedMemoryArray<T> {
     /// Creates a new PMA.
-    pub fn with_capacity(capacity: usize) -> Self {
+    pub fn new() -> Self {
         Self {
-            data: Vec::with_capacity(capacity),
+            size: 0,
+            capacity: 1 << 4,
+            segment_size: 4,
+            depth: 0,
+            Δρ: 0.0,
+            Δτ: 0.0,
+            data: Vec::new(),
         }
     }
 
